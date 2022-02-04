@@ -37,16 +37,6 @@ export default function Home({ product }: HomeProps) {
   )
 }
 
-// Client-side: Dados que são gerados após a pagina ter sido renderizada, Menos Processamento
-// Server-side: Dados carregando antes da tela ser renderizada, Mais processamento
-// Static Site Generation: Pagina em cache, Cache
-// Com a necessidade de realizar uma chamada por motivo de indexação para motores de busca, é melhor utilizar getStaticProps
-// em casos que é necessário dados em tempo real, porém
-// se for uma chamada custosa, ou que os dados persistem por muito tempo, a melhor forma é através do getStaticProps,
-// pois é mais performático,
-// de outra forma a melhor forma é realizar uma chamada api pelo lado do cliente.
-// SSG Gera uma pagina estática html realizando cache e retornando para o novos usuários de forma mais rápida: getStaticProps
-// SSR Realiza a chamada api no servidor next: getServerSideProps
 export const getStaticProps: GetStaticProps = async () => {
   const price = await stripe.prices.retrieve('price_1KPS0VHnV4GSwrmDa1jjFul8')
 
