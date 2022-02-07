@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { GetStaticProps } from 'next'
@@ -17,6 +18,8 @@ type Props = {
 }
 
 export default function Posts({ posts }: Props) {
+  const { data: session } = useSession()
+
   return (
     <>
       <Head>
@@ -25,8 +28,11 @@ export default function Posts({ posts }: Props) {
       <main className={styles.container}>
         <div className={styles.posts}>
           {posts.map((post) => (
-            <Link href={`/posts/${post.slug}`}>
-              <a key={post.slug}>
+            <Link
+              href={session?.activeSubscription ? `/posts/${post.slug}` : `/posts/preview/${post.slug}`}
+              key={post.slug}
+            >
+              <a>
                 <time>{post.updatedAt}</time>
                 <strong>{post.title}</strong>
                 <p>{post.excerpt}</p>
